@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SurveyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,5 +21,10 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
+
+Route::group(["middleware"=>["auth"]], function(){ 
+    Route::get('/started',[App\Http\Controllers\SurveyController::class, 'started'])->name('started'); 
+    Route::post('/formPost',[App\Http\Controllers\SurveyController::class, 'formPost'])->name('formPost');
+});
 
 require __DIR__.'/auth.php';
